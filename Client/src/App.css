@@ -1,0 +1,43 @@
+@import '~antd/dist/antd.css';
+
+.social__layout {
+    background: #09477a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.social__layout a {
+    padding: 5px 15px;
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.5s;
+    margin: 0 5px;
+}
+
+.social__layout a:hover {
+    background: #2871ac;
+}
+
+.social__content {
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    padding-top: 80px;
+}
+
+.logo a {
+    color: #fff;
+    background: #2871ac;
+}
+
+
+.vh100 {
+    height: 100vh;
+}
+
+.active {
+    background: #2871ac;
+}
