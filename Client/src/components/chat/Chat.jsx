@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function Chat() {
-  return <div>Chat    Rafo Petrosyan</div>;
+  return <div>  Rafo Fature Chat </div>;
 }
