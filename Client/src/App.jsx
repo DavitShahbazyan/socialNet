@@ -20,7 +20,6 @@ const { Header, Content } = Layout;
 function App() {
   return (
     <Layout className='vh100' >
-
       <Header className='social__layout'>
         <Row justify="space-between">
           <Col>
