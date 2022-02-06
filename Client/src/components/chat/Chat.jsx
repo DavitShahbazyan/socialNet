@@ -46,6 +46,12 @@ export default function Chat() {
     const [newText, setNewText] = useState('');
     const [data, setData] = useState([...messages]);
 
+    const newDate = () =>{
+        const h = "0" + new Date().getHours();
+        const m = "0" + new Date().getMinutes();
+        return `${h.slice(-2)}:${m.slice(-2)}`;
+    }
+
     const hendleText = e =>{
         setNewText(e.target.value);
     }
@@ -56,7 +62,7 @@ export default function Chat() {
             id: prev.length + 1,
             name: 'Karo',
             text: newText,
-            time: '12:30',
+            time: newDate(),
             sent: true
         }]) 
         console.log(data);

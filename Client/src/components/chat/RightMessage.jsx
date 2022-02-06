@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import './Chat.css';
 
-
 export default function RightMessage({item: {name, text, time}}){
+
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({block: "end"})
+    }
+
+    useEffect(() =>{
+        scrollToBottom();
+    }, []);   
+
     return(
-            <div className="msg right-msg">
+            <div className="msg right-msg" ref={messagesEndRef}>
                 <div className="msg-img"></div>
                 <div className="msg-bubble">
                     <div className="msg-info">
