@@ -30,9 +30,20 @@ function isRegisterAuthenticated({ email }) {
   return userdb.users.findIndex((user) => user.email === email) !== -1;
 }
 
+function getUser({ email }) {
+  return userdb.users.find((user) => user.email === email);
+}
+
 server.post("/api/auth/register", (req, res) => {
-  console.log(res);
-  const { email, password } = req.body;
+  const {
+    agreement,
+    email,
+    gender,
+    nickname,
+    password,
+    phone,
+    prefix, } = req.body;
+
   if (isRegisterAuthenticated({ email })) {
     const status = 401;
     const message = "Email already exist";
@@ -42,7 +53,7 @@ server.post("/api/auth/register", (req, res) => {
 
   fs.readFile("./users.json", (err, data) => {
     if (err) {
-      const status = 401; 
+      const status = 401;
       const message = err;
       res.status(status).json({ status, message });
       return;
@@ -51,7 +62,17 @@ server.post("/api/auth/register", (req, res) => {
 
     let last_item_id = data.users[data.users.length - 1].id;
 
-    data.users.push({ id: last_item_id + 1, email: email, password: password });
+    data.users.push({
+      id: last_item_id + 1,
+      email,
+      password,
+      agreement,
+      gender,
+      nickname,
+      phone,
+      prefix,
+    });
+
     let writeData = fs.writeFile(
       "./users.json",
       JSON.stringify(data),
@@ -82,9 +103,16 @@ server.post("/api/auth/login", (req, res) => {
     return;
   }
 
+  const user = getUser({ email });
+
   const access_token = createToken({ email, password });
   setTimeout(() => {
-    res.status(200).json({ access_token });
+    res.status(200).json({
+      access_token,
+      Data: {
+        user
+      }
+    });
   }, 2000);
 });
 

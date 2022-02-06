@@ -21,11 +21,7 @@
 }
 
 .social__content {
-    /* display: flex; */
-    flex-direction: column;
-    justify-content: center;
-    align-self: center;
-    padding-top: 80px;
+    padding-top: 64px;
 }
 
 .logo a {
