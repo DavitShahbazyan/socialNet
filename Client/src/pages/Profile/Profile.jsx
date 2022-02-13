@@ -3,7 +3,9 @@ import './Profile.css'
 
 const data = []
 
-export default function Profile(data) {
+const Profile = (data) => {
     const { name, email, img, } = data
     return <div>Profile</div>;
 }
+
+export default Profile;

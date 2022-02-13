@@ -19,31 +19,6 @@
             "id": 5,
             "email": "qwe@mail.ru",
             "password": "1234"
-        },
-        {
-            "id": 6,
-            "email": "shahbazyandav969@gmail.com",
-            "password": "qwe123"
-        },
-        {
-            "id": 7,
-            "email": "shahbazyandav@gmail.com",
-            "password": "qwe123",
-            "agreement": true,
-            "gender": "male",
-            "nickname": "DavShahbazyan",
-            "phone": "93433315",
-            "prefix": "+374"
-        },
-        {
-            "id": 8,
-            "email": "davit.shahbazyan@digitain.com",
-            "password": "qwe123",
-            "agreement": true,
-            "gender": "male",
-            "nickname": "DavShah",
-            "phone": "93433315",
-            "prefix": "+374"
         }
     ]
 }

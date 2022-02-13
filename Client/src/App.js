@@ -1,53 +1,31 @@
 import './App.css';
+import React, { lazy, Suspense } from 'react';
+import { Routes, Route } from "react-router-dom";
+import Box from '@mui/material/Box';
+import Header from './components/Header/Header';
 
-import React from 'react';
-import { Col, Layout, Row } from 'antd';
-import { Footer } from 'antd/lib/layout/layout';
-import LoginPage from './pages/Login/LoginPage';
-
-import {
-  Routes,
-  Route,
-  NavLink
-} from "react-router-dom";
-import RegistrationPage from './pages/Registration/Registration';
-
-import Dashboard from './pages/Dashboard/Dashboard';
-import Profile from './pages/Profile/Profile';
-
-const { Header, Content } = Layout;
+const Login = lazy(() => import('./pages/Login/Login'))
+const Register = lazy(() => import('./pages/Register/Register'));
+const Home = lazy(() => import('./pages/Home/Home'));
+const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 function App() {
+  const isAuth = true;
+
   return (
-    <Layout className='vh100' >
-
-      <Header className='social__layout'>
-        <Row justify="space-between">
-          <Col>
-            <h1 className='logo'>
-              <NavLink to={''}>
-                SOCIAL NETWORK
-              </NavLink>
-            </h1>
-          </Col>
-          <Col>
-            <NavLink to={'login'} >LOGIN</NavLink>
-            <NavLink to={'/registration'} >REGISTRATION</NavLink>
-          </Col>
-        </Row>
-      </Header>
-
-      <Content className='social__content'>
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        {isAuth ? <Header /> : false}
+      </Box>
+      <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/registration' element={<RegistrationPage />} />
-          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/registration' element={<Register />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/profile' element={<Profile />} />
         </Routes>
-      </Content>
-
-      <Footer>Footer</Footer>
-    </Layout>
+      </Suspense>
+    </>
   )
 }
 
