@@ -19,7 +19,7 @@ function App() {
       horizontal: 'center',
     }}>
       <Box sx={{ flexGrow: 1 }}>
-        {/* {isAuth ? <Header /> : false} */}
+        {isAuth ? <Header /> : false}
       </Box>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>

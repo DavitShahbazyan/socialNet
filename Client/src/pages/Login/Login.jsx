@@ -42,8 +42,8 @@ const Login = () => {
         event.preventDefault();
         authService.login({ email, password }).then(res => {
             console.log(res);
-            if (res.Data?.user) {
-                handleMessage(`Hello ${res.Data.user.email}`, 'success');
+            if (res.access_token) {
+                handleMessage(`Hello ${res.Data.user.firstName} ${res.Data.user.lastName}`, 'success');
                 navigate('/home');
             } else {
                 handleMessage(res.message, 'error');

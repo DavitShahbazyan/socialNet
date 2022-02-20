@@ -11,28 +11,11 @@
             "password": "david1234"
         },
         {
-            "id": 4,
-            "email": "aaaa@mail.ru",
-            "password": "1234"
-        },
-        {
-            "id": 5,
-            "email": "qwe@mail.ru",
-            "password": "1234"
-        },
-        {
-            "id": 6,
-            "email": "shahbazyan.david@mail.ru",
-            "password": "qwerty",
+            "id": null,
             "firstName": "David",
-            "lastName": "Shahbazyan"
-        },
-        {
-            "id": 7,
+            "lastName": "Shahbazyan",
             "email": "shahbazyan.david@mail.ru",
-            "password": "qwerty",
-            "firstName": "David",
-            "lastName": "Shahbazyan"
+            "password": "david1234"
         }
     ]
 }
