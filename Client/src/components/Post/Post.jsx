@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     styled,
     Card,
@@ -32,23 +32,32 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-const Post = () => {
+const Post = ({ data }) => {
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
+    useEffect(() => {
+        console.log(data);
+    }, [data])
+
+
     return (
         <Paper elevation={5} sx={{ maxWidth: '80%', marginBottom: '50px' }}>
             <CardHeader
-                avatar={<Avatar aria-label="recipe">R</Avatar>}
+                avatar={
+                    <Tooltip title={data.createdBy}>
+                        <Avatar aria-label="recipe">{data.createdBy.slice(0, 1)}</Avatar>
+                    </Tooltip>
+                }
                 action={
                     <IconButton aria-label="settings">
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title="Shrimp and Chorizo Paella"
+                title={data.title}
                 subheader="September 14, 2016"
             />
             <CardMedia
@@ -58,9 +67,7 @@ const Post = () => {
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the mussels,
-                    if you like.
+                    {data.content}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>

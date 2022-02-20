@@ -21,10 +21,15 @@ const logout = () => {
     localStorage.removeItem("user");
 };
 
+const getPosts = () => {
+    return axios.get("http://localhost:5000/api/login");
+}
+
 const authService = {
     register,
     login,
     logout,
+    getPosts
 }
 
 export default authService;
