@@ -53,7 +53,7 @@ server.post("/api/auth/register", (req, res) => {
     }
     data = JSON.parse(data.toString());
 
-    let last_item_id = data.users.length + 1;
+    let last_item_id = data.users.length;
 
     data.users.push({
       id: last_item_id + 1,
