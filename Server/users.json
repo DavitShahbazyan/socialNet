@@ -1,17 +1,7 @@
 {
     "users": [
         {
-            "id": 2,
-            "email": "test@gmail.com",
-            "password": "123456"
-        },
-        {
-            "id": 3,
-            "email": "David",
-            "password": "david1234"
-        },
-        {
-            "id": null,
+            "id": 1,
             "firstName": "David",
             "lastName": "Shahbazyan",
             "email": "shahbazyan.david@mail.ru",

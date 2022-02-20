@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const server = jsonServer.create();
 const userdb = JSON.parse(fs.readFileSync("./users.json", "utf-8"));
+const postsdb = JSON.parse(fs.readFileSync("./posts.json", "utf-8"));
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
@@ -53,7 +54,7 @@ server.post("/api/auth/register", (req, res) => {
     }
     data = JSON.parse(data.toString());
 
-    let last_item_id = data.users.length + 1;
+    let last_item_id = data.users.length;
 
     data.users.push({
       id: last_item_id + 1,
@@ -101,6 +102,13 @@ server.post("/api/auth/login", (req, res) => {
         user
       }
     });
+  }, 2000);
+});
+
+server.get("/api/login", (req, res) => {
+
+  setTimeout(() => {
+    res.status(200).json(postsdb.posts);
   }, 2000);
 });
 
