@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,18 +11,42 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import authService from './../../api/auth.service';
+import { useSnackbar } from 'notistack';
 
 const theme = createTheme();
 
 function Register() {
+    const { enqueueSnackbar } = useSnackbar();
+    const navigate = useNavigate();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    useEffect(() => {
+        if (email && password) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [email, password, firstName, lastName])
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+
+        authService.register(firstName, lastName, email, password).then(res => {
+            if (res.data.access_token) {
+                enqueueSnackbar('You are successfully registered', { variant: 'success' });
+                setTimeout(() => {
+                    navigate('/login');
+                }, 1000);
+            } else {
+                enqueueSnackbar(res.data.message, { variant: 'error' });
+            }
         });
     };
 
@@ -55,6 +79,7 @@ function Register() {
                                     id="firstName"
                                     label="First Name"
                                     autoFocus
+                                    onChange={e => setFirstName(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -65,6 +90,7 @@ function Register() {
                                     label="Last Name"
                                     name="lastName"
                                     autoComplete="family-name"
+                                    onChange={e => setLastName(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -75,6 +101,7 @@ function Register() {
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    onChange={e => setEmail(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -86,6 +113,7 @@ function Register() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
+                                    onChange={e => setPassword(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -100,6 +128,7 @@ function Register() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            disabled={!isDisabled}
                         >
                             Sign Up
                         </Button>

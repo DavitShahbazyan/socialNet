@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,17 +12,42 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import authService from './../../api/auth.service';
+import { useSnackbar } from 'notistack';
 
 const theme = createTheme();
 
 const Login = () => {
+    const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    const handleMessage = (message, type) => {
+        enqueueSnackbar(message, { variant: type });
+    };
+
+    useEffect(() => {
+        if (email && password) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [email, password])
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+        authService.login({ email, password }).then(res => {
+            console.log(res);
+            if (res.Data?.user) {
+                handleMessage(`Hello ${res.Data.user.email}`, 'success');
+                navigate('/home');
+            } else {
+                handleMessage(res.message, 'error');
+            }
         });
     };
 
@@ -68,6 +93,8 @@ const Login = () => {
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <TextField
                                 margin="normal"
@@ -78,6 +105,8 @@ const Login = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
@@ -88,6 +117,7 @@ const Login = () => {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
+                                disabled={!isDisabled}
                             >
                                 Sign In
                             </Button>

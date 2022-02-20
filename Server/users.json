@@ -19,6 +19,20 @@
             "id": 5,
             "email": "qwe@mail.ru",
             "password": "1234"
+        },
+        {
+            "id": 6,
+            "email": "shahbazyan.david@mail.ru",
+            "password": "qwerty",
+            "firstName": "David",
+            "lastName": "Shahbazyan"
+        },
+        {
+            "id": 7,
+            "email": "shahbazyan.david@mail.ru",
+            "password": "qwerty",
+            "firstName": "David",
+            "lastName": "Shahbazyan"
         }
     ]
 }

@@ -36,18 +36,15 @@ function getUser({ email }) {
 
 server.post("/api/auth/register", (req, res) => {
   const {
-    agreement,
+    firstName,
+    lastName,
     email,
-    gender,
-    nickname,
-    password,
-    phone,
-    prefix, } = req.body;
+    password } = req.body;
 
   if (isRegisterAuthenticated({ email })) {
     const status = 401;
     const message = "Email already exist";
-    res.status(status).json({ status, message });
+    res.status(200).json({ status, message });
     return;
   }
 
@@ -66,11 +63,8 @@ server.post("/api/auth/register", (req, res) => {
       id: last_item_id + 1,
       email,
       password,
-      agreement,
-      gender,
-      nickname,
-      phone,
-      prefix,
+      firstName,
+      lastName
     });
 
     let writeData = fs.writeFile(
@@ -98,17 +92,17 @@ server.post("/api/auth/login", (req, res) => {
     const message = "Incorrect Email or Password";
 
     setTimeout(() => {
-      res.status(status).json({ status, message });
+      res.status(200).json({ status, message });
     }, 2000);
     return;
   }
 
   const user = getUser({ email });
 
-  const access_token = createToken({ email, password });
+  const accessToken = createToken({ email, password });
   setTimeout(() => {
     res.status(200).json({
-      access_token,
+      accessToken,
       Data: {
         user
       }
