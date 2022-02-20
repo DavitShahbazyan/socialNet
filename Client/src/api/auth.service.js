@@ -7,7 +7,6 @@ const login = async ({ email, password }) => {
         email,
         password,
     });
-    console.log(response);
     if (response.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data.Data.user));
     }
@@ -15,12 +14,7 @@ const login = async ({ email, password }) => {
 };
 
 const register = (firstName, lastName, email, password) => {
-    return axios.post(API_URL + "register", {
-        firstName,
-        lastName,
-        email,
-        password
-    })
+    return axios.post(API_URL + "register", { firstName, lastName, email, password });
 }
 
 const logout = () => {

@@ -10,8 +10,7 @@ const Home = () => {
 
     return (
         <>
-
-            <div div className='dashboardWrapper' >
+            <div className='dashboardWrapper' >
                 <Layout style={{ height: '100%', paddingTop: '64px' }}>
                     <Sider width={300} style={{ background: '#fff' }}>
                         <Menu
@@ -44,8 +43,6 @@ const Home = () => {
                         </Menu>
                     </Sider>
                 </Layout>
-                {/* <Post />
-            <Post /> */}
             </div >
         </>
     );

@@ -35,11 +35,7 @@ function getUser({ email }) {
 }
 
 server.post("/api/auth/register", (req, res) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    password } = req.body;
+  const { firstName, lastName, email, password, } = req.body;
 
   if (isRegisterAuthenticated({ email })) {
     const status = 401;
@@ -52,38 +48,36 @@ server.post("/api/auth/register", (req, res) => {
     if (err) {
       const status = 401;
       const message = err;
-      res.status(status).json({ status, message });
+      res.status(200).json({ status, message });
       return;
     }
     data = JSON.parse(data.toString());
 
-    let last_item_id = data.users[data.users.length - 1].id;
+    let last_item_id = data.users.length + 1;
 
     data.users.push({
       id: last_item_id + 1,
+      firstName,
+      lastName,
       email,
       password,
-      firstName,
-      lastName
     });
 
-    let writeData = fs.writeFile(
-      "./users.json",
-      JSON.stringify(data),
-      (err, result) => {
-        if (err) {
-          const status = 401;
-          const message = err;
-          res.status(status).json({ status, message });
-          return;
-        }
+    let writeData = fs.writeFile("./users.json", JSON.stringify(data), (err, result) => {
+      if (err) {
+        const status = 401;
+        const message = err;
+        res.status(200).json({ status, message });
+        return;
       }
-    );
+    });
   });
   const access_token = createToken({ email, password });
   res.status(200).json({ access_token });
 });
 
+
+// LOGIN ///-------------------------
 server.post("/api/auth/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -99,16 +93,17 @@ server.post("/api/auth/login", (req, res) => {
 
   const user = getUser({ email });
 
-  const accessToken = createToken({ email, password });
+  const access_token = createToken({ email, password });
   setTimeout(() => {
     res.status(200).json({
-      accessToken,
+      access_token,
       Data: {
         user
       }
     });
   }, 2000);
 });
+
 
 server.listen(5000, () => {
   console.log("Running Social Network Server");
