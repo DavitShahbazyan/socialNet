@@ -4,7 +4,6 @@ import './Home.css'
 import { Layout, Menu } from 'antd';
 import Post from './../../components/Post/Post';
 
-
 const { Content, Sider } = Layout;
 
 const Home = () => {
