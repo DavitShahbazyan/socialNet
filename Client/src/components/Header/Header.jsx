@@ -16,6 +16,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Tooltip } from '@mui/material';
 import authService from './../../api/auth.service';
+import { useDispatch } from 'react-redux';
+import { logountAction } from '../../actions';
 
 
 const settings = ['Profile', 'Account', 'Dashboard'];
@@ -61,6 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Header = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const dispatch = useDispatch();
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -69,6 +72,12 @@ const Header = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const logout = () => {
+        dispatch(logountAction());
+        authService.logout();
+        handleCloseUserMenu();
+    }
 
     const menuId = 'primary-search-account-menu';
 
@@ -142,10 +151,7 @@ const Header = () => {
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
-                            <MenuItem onClick={() => {
-                                authService.logout();
-                                handleCloseUserMenu();
-                            }}>
+                            <MenuItem onClick={logout}>
                                 <Typography textAlign="center">Logout</Typography>
                             </MenuItem>
                         </Menu>

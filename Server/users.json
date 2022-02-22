@@ -6,6 +6,13 @@
             "lastName": "Shahbazyan",
             "email": "shahbazyan.david@mail.ru",
             "password": "david1234"
+        },
+        {
+            "id": 2,
+            "firstName": "Arman",
+            "lastName": "Arushanyan",
+            "email": "arushanyan.arman@gmail.com",
+            "password": "arman1234"
         }
     ]
 }

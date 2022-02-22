@@ -97,10 +97,8 @@ server.post("/api/auth/login", (req, res) => {
   const access_token = createToken({ email, password });
   setTimeout(() => {
     res.status(200).json({
-      access_token,
-      Data: {
-        user
-      }
+      user,
+      access_token
     });
   }, 2000);
 });

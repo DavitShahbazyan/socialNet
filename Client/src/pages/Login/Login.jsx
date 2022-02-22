@@ -15,10 +15,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavLink, useNavigate } from 'react-router-dom';
 import authService from './../../api/auth.service';
 import { useSnackbar } from 'notistack';
+import { userActions } from '../../actions';
+import { useDispatch } from 'react-redux';
+import { userConstants } from './../../constants/user.constans';
 
 const theme = createTheme();
 
 const Login = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const [email, setEmail] = useState('');
@@ -41,9 +45,9 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         authService.login({ email, password }).then(res => {
-            console.log(res);
             if (res.access_token) {
-                handleMessage(`Hello ${res.Data.user.firstName} ${res.Data.user.lastName}`, 'success');
+                dispatch({ type: userConstants.LOGIN_SUCCESS, user: res.user });
+                handleMessage(`Hello ${res.user.firstName} ${res.user.lastName}`, 'success');
                 navigate('/home');
             } else {
                 handleMessage(res.message, 'error');

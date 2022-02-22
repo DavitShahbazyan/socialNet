@@ -1,10 +1,7 @@
 import React from 'react';
 import './Profile.css'
 
-const data = []
-
-const Profile = (data) => {
-    const { name, email, img, } = data
+const Profile = () => {
     return <div>Profile</div>;
 }
 
