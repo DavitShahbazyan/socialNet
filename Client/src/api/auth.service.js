@@ -1,4 +1,5 @@
 import axios from './axios';
+import { userActions } from './../actions/user.actions';
 
 const API_URL = "http://localhost:5000/api/auth/";
 
@@ -7,10 +8,10 @@ const login = async ({ email, password }) => {
         email,
         password,
     });
-    if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data.Data.user));
+    if (response.data.user) {
+        localStorage.setItem("token", JSON.stringify(response.data.access_token));
     }
-    return response.data;
+    return response.data
 };
 
 const register = (firstName, lastName, email, password) => {
@@ -18,7 +19,8 @@ const register = (firstName, lastName, email, password) => {
 }
 
 const logout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    window.location.reload(true);
 };
 
 const getPosts = () => {
