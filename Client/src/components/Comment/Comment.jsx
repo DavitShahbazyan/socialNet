@@ -1,5 +1,5 @@
 import { Avatar, Grid, Paper, Tooltip, Typography } from '@mui/material'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 export default function Comment({ comment }) {
     return (

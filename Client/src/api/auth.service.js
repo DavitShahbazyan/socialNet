@@ -27,11 +27,16 @@ const getPosts = () => {
     return axios.get("http://localhost:5000/api/login");
 }
 
+const getUsers = () => {
+    return axios.get("http://localhost:5000/api/allusers");
+}
+
 const authService = {
     register,
     login,
     logout,
-    getPosts
+    getPosts,
+    getUsers
 }
 
 export default authService;

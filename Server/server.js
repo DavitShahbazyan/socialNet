@@ -110,6 +110,11 @@ server.get("/api/login", (req, res) => {
   }, 500);
 });
 
+server.get("/api/allusers", (req, res) => {
+  setTimeout(() => {
+    res.status(200).json(userdb.users);
+  }, 500);
+});
 
 server.listen(5000, () => {
   console.log("Running Social Network Server");

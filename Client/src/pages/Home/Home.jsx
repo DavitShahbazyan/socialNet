@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css'
-
+import { LinearProgress, Box } from '@mui/material';
 import { Layout, Menu } from 'antd';
 import Post from './../../components/Post/Post';
 import authService from './../../api/auth.service';
-import Box from '@mui/material/Box';
-import { LinearProgress, CircularProgress } from '@mui/material';
+import UserBlock from './../../components/UserBlock/UserBlock';
 
 const { Content, Sider } = Layout;
 
 const Home = () => {
     const [posts, setPosts] = useState(null);
     const [loadingPost, setLoadingPost] = useState(true);
+    const [users, setUsers] = useState(null);
 
     useEffect(async () => {
         setLoadingPost(true);
@@ -19,15 +19,21 @@ const Home = () => {
         if (res.data) {
             setPosts(res.data)
         }
+        const users = await authService.getUsers();
+        setUsers(users.data);
         setLoadingPost(false);
     }, [])
 
+
+    const gotoUser = (user) => {
+
+    }
 
     return (
         <>
             <div className='dashboardWrapper' >
                 <Layout style={{ height: '100vh', paddingTop: '64px' }}>
-                    <Sider width={300} style={{ background: '#fff' }}>
+                    <Sider style={{ background: '#fff' }}>
                         <Menu
                             mode="inline"
                             style={{ height: '100%', }}
@@ -55,13 +61,16 @@ const Home = () => {
                             ))}
                         </Content>
                     </Layout>
-                    <Sider width={350} style={{ background: '#fff' }}>
-                        <Menu
-                            mode="inline"
-                            style={{ height: '100%', }}
-                        >
-
-                        </Menu>
+                    <Sider style={{
+                        background: '#fff',
+                        padding: 10,
+                        height: 'calc(100vh - 64px)',
+                        overflow: 'auto'
+                    }}>
+                        {users && users.map((user) => {
+                            return <UserBlock key={user.id} user={user} onClick={() => gotoUser(user)} />
+                        })
+                        }
                     </Sider>
                 </Layout>
             </div >
