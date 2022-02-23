@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
     styled,
-    Card,
     CardHeader,
     CardMedia,
     CardContent,
@@ -11,15 +10,15 @@ import {
     IconButton,
     Typography,
     Paper,
-    Grid,
-    Tooltip
+    Tooltip,
+    Badge
 } from '@mui/material';
 // Icons
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CommentIcon from '@mui/icons-material/Comment';
-import Message from './../Message/Message';
-import AddMessage from './../AddMessage/AddMessage';
+import Comment from './../Comment/Comment';
+import AddComment from './../AddComment/AddComment';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -38,11 +37,6 @@ const Post = ({ data }) => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-
-    useEffect(() => {
-        console.log(data);
-    }, [data])
-
 
     return (
         <Paper elevation={5} sx={{ maxWidth: '80%', marginBottom: '50px' }}>
@@ -63,7 +57,7 @@ const Post = ({ data }) => {
             <CardMedia
                 component="img"
                 height="500"
-                image={'https://picsum.photos/200/300'}
+                image={data.imgUrl}
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
@@ -71,12 +65,14 @@ const Post = ({ data }) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                <IconButton size="large" color="inherit" >
+                    <Tooltip title={data.likes || ''}>
+                        <Badge badgeContent={data.likes?.length} color="error">
+                            <FavoriteIcon />
+                        </Badge>
+                    </Tooltip>
                 </IconButton>
-                <ExpandMore
-                    onClick={handleExpandClick}
-                >
+                <ExpandMore onClick={handleExpandClick} >
                     <CommentIcon />
                 </ExpandMore>
 
@@ -85,8 +81,10 @@ const Post = ({ data }) => {
 
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Message />
-                    <AddMessage />
+                    {data.comments.map((comment, i) => {
+                        return <Comment key={i} comment={comment} />
+                    })}
+                    <AddComment />
                 </CardContent>
             </Collapse>
         </Paper>

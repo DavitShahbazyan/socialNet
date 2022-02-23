@@ -4,7 +4,10 @@
             "id": 1,
             "firstName": "David",
             "lastName": "Shahbazyan",
-            "email": "shahbazyan.david@mail.ru",
+            "email": "shahbazyan.david@gmail.ru",
+            "city": "Yerevan",
+            "country": "Armenia",
+            "phone": "37493433315",
             "password": "david1234"
         },
         {
@@ -13,6 +16,13 @@
             "lastName": "Arushanyan",
             "email": "arushanyan.arman@gmail.com",
             "password": "arman1234"
+        },
+        {
+            "id": 3,
+            "firstName": "Tshogik",
+            "lastName": "Hakobyan",
+            "email": "hakobyan.tshogik@gmail.com",
+            "password": "tshogik1234"
         }
     ]
 }

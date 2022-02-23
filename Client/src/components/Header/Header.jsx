@@ -13,14 +13,15 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Tooltip } from '@mui/material';
 import authService from './../../api/auth.service';
 import { useDispatch } from 'react-redux';
 import { logountAction } from '../../actions';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Link, useNavigate } from 'react-router-dom';
+import { ButtonBase } from '@mui/material';
 
 
-const settings = ['Profile', 'Account', 'Dashboard'];
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -64,6 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Header = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -85,14 +87,18 @@ const Header = () => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed">
                 <Toolbar>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                    >
-                        Social Network
-                    </Typography>
+                    <Link to="/home" style={{ color: '#fff' }}>
+                        <ButtonBase size="large" color="inherit">
+                            <Typography
+                                variant="h6"
+                                noWrap
+                                component="div"
+                                sx={{ display: { xs: 'none', sm: 'block' } }}
+                            >
+                                Social Network
+                            </Typography>
+                        </ButtonBase>
+                    </Link>
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -104,7 +110,7 @@ const Header = () => {
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                        <IconButton size="large" color="inherit">
                             <Badge badgeContent={1} color="error">
                                 <MailIcon />
                             </Badge>
@@ -115,7 +121,7 @@ const Header = () => {
                             color="inherit"
                         >
                             <Badge badgeContent={1} color="error">
-                                <NotificationsIcon />
+                                <FavoriteIcon />
                             </Badge>
                         </IconButton>
                         <Tooltip title="Open settings">
@@ -146,11 +152,13 @@ const Header = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={() => {
+                                handleCloseUserMenu();
+                                navigate('/profile');
+                            }}>
+                                <Typography textAlign="center">Profile</Typography>
+                            </MenuItem>
+
                             <MenuItem onClick={logout}>
                                 <Typography textAlign="center">Logout</Typography>
                             </MenuItem>

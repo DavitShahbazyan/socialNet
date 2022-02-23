@@ -15,16 +15,18 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavLink, useNavigate } from 'react-router-dom';
 import authService from './../../api/auth.service';
 import { useSnackbar } from 'notistack';
-import { userActions } from '../../actions';
-import { useDispatch } from 'react-redux';
-import { userConstants } from './../../constants/user.constans';
+import { loginRequestAction, successAction, failureAction } from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { CircularProgress } from '@mui/material';
 
 const theme = createTheme();
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { loading } = useSelector(state => state.authentication);
     const { enqueueSnackbar } = useSnackbar();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
@@ -32,6 +34,14 @@ const Login = () => {
     const handleMessage = (message, type) => {
         enqueueSnackbar(message, { variant: type });
     };
+
+    useEffect(() => {
+        if (loading) {
+            setIsDisabled(false);
+        } else {
+            setIsDisabled(true);
+        }
+    }, [loading])
 
     useEffect(() => {
         if (email && password) {
@@ -44,14 +54,18 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        dispatch(loginRequestAction());
         authService.login({ email, password }).then(res => {
             if (res.access_token) {
-                dispatch({ type: userConstants.LOGIN_SUCCESS, user: res.user });
+                dispatch(successAction(res.user));
                 handleMessage(`Hello ${res.user.firstName} ${res.user.lastName}`, 'success');
                 navigate('/home');
             } else {
-                handleMessage(res.message, 'error');
+                return Promise.reject(res)
             }
+        }).catch(error => {
+            dispatch(failureAction(error));
+            handleMessage(error.message, 'error');
         });
     };
 
@@ -123,6 +137,7 @@ const Login = () => {
                                 sx={{ mt: 3, mb: 2 }}
                                 disabled={!isDisabled}
                             >
+                                {loading && (<CircularProgress size={15} />)}
                                 Sign In
                             </Button>
                             <Grid container>

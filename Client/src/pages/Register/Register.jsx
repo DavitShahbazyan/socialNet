@@ -14,32 +14,50 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavLink, useNavigate } from 'react-router-dom';
 import authService from './../../api/auth.service';
 import { useSnackbar } from 'notistack';
+import { useDispatch, useSelector } from 'react-redux';
+import { CircularProgress } from '@mui/material';
+import { loginRequestAction, registerSuccessAction } from '../../actions';
 
 const theme = createTheme();
 
 function Register() {
+    const dispatch = useDispatch();
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const { loading } = useSelector(state => state.authentication);
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const [isDisabled, setIsDisabled] = useState(true);
 
     useEffect(() => {
-        if (email && password) {
+        if (loading) {
+            setIsDisabled(false);
+        } else {
+            setIsDisabled(true);
+        }
+    }, [loading])
+
+    useEffect(() => {
+        if (email && password && firstName && lastName) {
             setIsDisabled(true);
         } else {
             setIsDisabled(false);
         }
     }, [email, password, firstName, lastName])
 
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        dispatch(loginRequestAction());
 
         authService.register(firstName, lastName, email, password).then(res => {
             if (res.data.access_token) {
+                dispatch(registerSuccessAction());
+
                 enqueueSnackbar('You are successfully registered', { variant: 'success' });
                 setTimeout(() => {
                     navigate('/login');
@@ -130,6 +148,7 @@ function Register() {
                             sx={{ mt: 3, mb: 2 }}
                             disabled={!isDisabled}
                         >
+                            {loading && (<CircularProgress size={15} />)}
                             Sign Up
                         </Button>
                         <Grid container justifyContent="flex-end">

@@ -88,7 +88,7 @@ server.post("/api/auth/login", (req, res) => {
 
     setTimeout(() => {
       res.status(200).json({ status, message });
-    }, 2000);
+    }, 5000);
     return;
   }
 
@@ -107,7 +107,7 @@ server.get("/api/login", (req, res) => {
 
   setTimeout(() => {
     res.status(200).json(postsdb.posts);
-  }, 2000);
+  }, 500);
 });
 
 

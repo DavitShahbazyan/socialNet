@@ -8,8 +8,8 @@ const login = async ({ email, password }) => {
         email,
         password,
     });
-    if (response.data.user) {
-        localStorage.setItem("token", JSON.stringify(response.data.access_token));
+    if (response.data.access_token) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
     }
     return response.data
 };
@@ -19,7 +19,7 @@ const register = (firstName, lastName, email, password) => {
 }
 
 const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     window.location.reload(true);
 };
 

@@ -8,7 +8,7 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 
 
-export default function AddMessage() {
+export default function AddComment() {
     return (
         <Paper
             elevation={1}
