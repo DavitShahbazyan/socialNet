@@ -83,9 +83,16 @@ const Post = ({ data }) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton size="large" onClick={handleLike}>
-                    <Tooltip title={data.likes?.length ? data.likes.map(like => like.userFullName) : ''}>
-                        <Badge badgeContent={data.likes?.length} color="error" >
+                <IconButton size="large">
+                    <Tooltip title={
+                        data.likes?.length ?
+                            <div style={{ whiteSpace: 'pre-line' }}>
+                                {(data.likes.map(like => like.userFullName)).join('\n')}
+                            </div>
+                            : ''
+                    }
+                    >
+                        <Badge badgeContent={data.likes?.length} color="error" onClick={handleLike}>
                             <FavoriteIcon color='action' />
                         </Badge>
                     </Tooltip>
