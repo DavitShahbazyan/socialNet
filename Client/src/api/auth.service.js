@@ -38,6 +38,14 @@ const getCountres = () => {
     return axios.get('https://restcountries.com/v3.1/all');
 }
 
+const addComment = (data) => {
+    return axios.post('http://localhost:5000/api/comment', data);
+}
+
+const postLike = (data) => {
+    return axios.post('http://localhost:5000/api/postLike', data);
+}
+
 const authService = {
     register,
     login,
@@ -45,7 +53,9 @@ const authService = {
     getPosts,
     getUsers,
     createPosts,
-    getCountres
+    getCountres,
+    addComment,
+    postLike
 }
 
 export default authService;
