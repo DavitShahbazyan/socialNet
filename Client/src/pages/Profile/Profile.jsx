@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Avatar,
     Box,
@@ -11,12 +11,22 @@ import {
     Typography,
     Container,
     Grid,
-    TextField
+    TextField,
+    Input
 } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import authService from '../../api/auth.service';
 
+const getBase64 = (file) => new Promise(function (resolve, reject) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (error) => reject('Error: ', error);
+})
 
 const Account = () => {
+    const { id } = useParams();
     const { user } = useSelector(state => state.authentication);
     const [values, setValues] = useState(user);
 
@@ -26,6 +36,11 @@ const Account = () => {
             [event.target.name]: event.target.value
         });
     };
+
+    useEffect(async () => {
+        const countres = await authService.getCountres();
+        console.log(countres);
+    }, [])
 
     const onSubmit = () => {
         console.log(values);
@@ -67,23 +82,20 @@ const Account = () => {
                                             color="textSecondary"
                                             variant="body2"
                                         >
-                                            {`${user.city} ${user.country}`}
+                                            {(user.city ? user.city : '') + ' ' + (user.country ? user.country : '')}
                                         </Typography>
                                     </Box>
                                 </CardContent>
                                 <Divider />
                                 <CardActions>
-                                    <Button
-                                        color="primary"
-                                        fullWidth
-                                        variant="text"
-                                    >
-                                        Upload picture
-                                    </Button>
+                                    <label htmlFor="contained-button-file">
+                                        <Input accept="image/*" id="contained-button-file" multiple type="file" hidden />
+                                        <Button variant="contained" component="span">
+                                            Upload
+                                        </Button>
+                                    </label>
                                 </CardActions>
                             </Card>
-
-
                         </Grid>
                         <Grid
                             item

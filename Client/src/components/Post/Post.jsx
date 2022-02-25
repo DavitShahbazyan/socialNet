@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, memo } from 'react';
 import {
     styled,
     CardHeader,
@@ -19,6 +19,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CommentIcon from '@mui/icons-material/Comment';
 import Comment from './../Comment/Comment';
 import AddComment from './../AddComment/AddComment';
+import List from '@mui/material/List';
+
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -38,8 +40,12 @@ const Post = ({ data }) => {
         setExpanded(!expanded);
     };
 
+    const handleLike = () => {
+
+    }
+
     return (
-        <Paper elevation={5} sx={{ maxWidth: '80%', marginBottom: '50px' }}>
+        <Paper elevation={5} sx={{ width: '80%', marginBottom: '50px', borderRadius: 3 }}>
             <CardHeader
                 avatar={
                     <Tooltip title={data.createdBy}>
@@ -51,8 +57,8 @@ const Post = ({ data }) => {
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title={data.title}
-                subheader="September 14, 2016"
+                title={data.createdBy}
+                subheader={data.createdDate}
             />
             <CardMedia
                 component="img"
@@ -65,10 +71,10 @@ const Post = ({ data }) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton size="large" color="inherit" >
-                    <Tooltip title={data.likes || ''}>
-                        <Badge badgeContent={data.likes?.length} color="error">
-                            <FavoriteIcon />
+                <IconButton size="large" onClick={handleLike}>
+                    <Tooltip title={data.likes?.length ? data.likes : ''}>
+                        <Badge badgeContent={data.likes?.length} color="error" >
+                            <FavoriteIcon color='action' />
                         </Badge>
                     </Tooltip>
                 </IconButton>
@@ -81,9 +87,11 @@ const Post = ({ data }) => {
 
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    {data.comments.map((comment, i) => {
-                        return <Comment key={i} comment={comment} />
-                    })}
+                    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                        {data.comments.map((comment, i) => {
+                            return <Comment key={i} comment={comment} />
+                        })}
+                    </List>
                     <AddComment />
                 </CardContent>
             </Collapse>
@@ -91,4 +99,4 @@ const Post = ({ data }) => {
     );
 }
 
-export default Post;
+export default memo(Post);

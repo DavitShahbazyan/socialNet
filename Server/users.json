@@ -8,7 +8,8 @@
             "city": "Yerevan",
             "country": "Armenia",
             "phone": "37493433315",
-            "password": "david1234"
+            "password": "david1234",
+            "avatar": ""
         },
         {
             "id": 2,
@@ -19,7 +20,7 @@
         },
         {
             "id": 3,
-            "firstName": "Tshogik",
+            "firstName": "Tsoghik",
             "lastName": "Hakobyan",
             "email": "hakobyan.tshogik@gmail.com",
             "password": "tshogik1234"

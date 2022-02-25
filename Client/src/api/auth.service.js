@@ -1,5 +1,4 @@
 import axios from './axios';
-import { userActions } from './../actions/user.actions';
 
 const API_URL = "http://localhost:5000/api/auth/";
 
@@ -27,11 +26,26 @@ const getPosts = () => {
     return axios.get("http://localhost:5000/api/login");
 }
 
+const getUsers = () => {
+    return axios.get("http://localhost:5000/api/allusers");
+}
+
+const createPosts = (data) => {
+    return axios.post("http://localhost:5000/api/posts", data);
+}
+
+const getCountres = () => {
+    return axios.get('https://restcountries.com/v3.1/all');
+}
+
 const authService = {
     register,
     login,
     logout,
-    getPosts
+    getPosts,
+    getUsers,
+    createPosts,
+    getCountres
 }
 
 export default authService;

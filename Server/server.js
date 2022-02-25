@@ -7,8 +7,9 @@ const server = jsonServer.create();
 const userdb = JSON.parse(fs.readFileSync("./users.json", "utf-8"));
 const postsdb = JSON.parse(fs.readFileSync("./posts.json", "utf-8"));
 
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+server.use(bodyParser.json({ limit: "50mb" }));
+
 server.use(jsonServer.defaults());
 
 const SECRET_KEY = "72676376";
@@ -110,6 +111,43 @@ server.get("/api/login", (req, res) => {
   }, 500);
 });
 
+
+server.get("/api/allusers", (req, res) => {
+  setTimeout(() => {
+    res.status(200).json(userdb.users);
+  }, 500);
+});
+
+server.post('/api/posts', (req, res) => {
+  const { createdDate, imgUrl, content, createdBy, createdById } = req.body
+  let postsData = {}
+  fs.readFile("./posts.json", (err, data) => {
+    postsData = JSON.parse(data.toString());
+
+    postsData.posts.unshift({
+      id: Date.now(),
+      imgUrl,
+      content,
+      createdDate,
+      createdBy,
+      createdById,
+      likes: [],
+      comments: []
+    })
+    const writeData = fs.writeFile("./posts.json", JSON.stringify(postsData), (err, result) => {
+      if (err) {
+        const status = 401;
+        const message = err;
+        res.status(200).json({ status, message });
+        return;
+      }
+    });
+    res.status(200).json(postsData);
+  })
+
+
+  console.log(req.body);
+})
 
 server.listen(5000, () => {
   console.log("Running Social Network Server");

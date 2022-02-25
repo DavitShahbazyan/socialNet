@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { Container, Typography, Box, CssBaseline, TextField, Grid, CircularProgress, Avatar, Button } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import authService from './../../api/auth.service';
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
 import { loginRequestAction, registerSuccessAction } from '../../actions';
 
 const theme = createTheme();
@@ -25,7 +15,6 @@ function Register() {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const { loading } = useSelector(state => state.authentication);
-
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -134,12 +123,6 @@ function Register() {
                                     onChange={e => setPassword(e.target.value)}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
-                            </Grid>
                         </Grid>
                         <Button
                             type="submit"
@@ -148,8 +131,8 @@ function Register() {
                             sx={{ mt: 3, mb: 2 }}
                             disabled={!isDisabled}
                         >
-                            {loading && (<CircularProgress size={15} />)}
-                            Sign Up
+                            {loading && (<CircularProgress size={25} />)}
+                            {!loading && 'Sign Up'}
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
@@ -162,7 +145,7 @@ function Register() {
                 </Box>
             </Container>
         </ThemeProvider>
-    );
+    )
 }
 
 export default Register;

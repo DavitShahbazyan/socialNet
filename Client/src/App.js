@@ -1,6 +1,6 @@
 import './App.css';
-import React, { useEffect, lazy, Suspense } from 'react';
-import { Routes, Route, useNavigate } from "react-router-dom";
+import React, { lazy, Suspense } from 'react';
+import { Routes, Route } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Header from './components/Header/Header';
 import { SnackbarProvider } from 'notistack';
@@ -15,14 +15,6 @@ const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 function App() {
   const { loggedIn, loading } = useSelector(state => state.authentication);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loggedIn) {
-      navigate('/login');
-    }
-  }, [loggedIn, navigate])
-
 
   return (
     <SnackbarProvider
@@ -60,7 +52,7 @@ function App() {
             }
           />
           <Route
-            path="/profile"
+            path="/profile/:id"
             element={
               <PrivateRoute>
                 <Profile />
