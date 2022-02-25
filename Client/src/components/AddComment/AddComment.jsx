@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Paper, InputBase,
     Divider,
@@ -6,23 +6,48 @@ import {
     Avatar
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { useDispatch, useSelector } from 'react-redux';
+import authService from '../../api/auth.service';
+import { getAllPostsSuccessAction } from '../../actions';
 
+export default function AddComment({ postId }) {
+    const [content, setContent] = useState('');
+    const { user } = useSelector(state => state.authentication);
+    const dispatch = useDispatch();
 
-export default function AddComment() {
+    const handleSubmit = () => {
+        authService.addComment({
+            commentsById: user.id,
+            commentsByName: `${user.firstName} ${user.lastName}`,
+            content,
+            id: Date.now(),
+            postId
+        }).then(res => {
+            if (res.data.posts) {
+                dispatch(getAllPostsSuccessAction(res.data.posts));
+                setContent('')
+            }
+        })
+    }
+
     return (
         <Paper
             elevation={1}
-            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center' }}
+            sx={{ p: '10px', display: 'flex', alignItems: 'center' }}
         >
-            <IconButton sx={{ p: '10px' }}>
-                <Avatar alt="Remy Sharp" src={'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'} />
-            </IconButton>
+            <Avatar
+                alt={`${user.firstName} ${user.lastName}`}
+                src={`${user.avatart}`}
+            />
+
             <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Add Comments"
                 inputProps={{ 'aria-label': 'search google maps' }}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
             />
-            <IconButton sx={{ p: '10px' }}>
+            <IconButton sx={{ p: '10px' }} onClick={handleSubmit} disabled={!content}>
                 <AddIcon />
             </IconButton>
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />

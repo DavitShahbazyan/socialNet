@@ -1,19 +1,21 @@
-const fs = require("fs");
-const bodyParser = require("body-parser");
-const jsonServer = require("json-server");
-const jwt = require("jsonwebtoken");
+import fs from 'fs';
+import express from 'express';
+import jwt from 'jsonwebtoken'
+import cors from 'cors';
 
-const server = jsonServer.create();
+const app = express();
+
+app.use(express.json({ limit: '50mb' }));
+app.use(cors());
+app.use(express.urlencoded({
+  extended: true,
+  limit: '50mb'
+}))
+
 const userdb = JSON.parse(fs.readFileSync("./users.json", "utf-8"));
 const postsdb = JSON.parse(fs.readFileSync("./posts.json", "utf-8"));
 
-server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
-server.use(bodyParser.json({ limit: "50mb" }));
-
-server.use(jsonServer.defaults());
-
 const SECRET_KEY = "72676376";
-
 const expiresIn = "1h";
 
 function createToken(payload) {
@@ -36,7 +38,7 @@ function getUser({ email }) {
   return userdb.users.find((user) => user.email === email);
 }
 
-server.post("/api/auth/register", (req, res) => {
+app.post("/api/auth/register", (req, res) => {
   const { firstName, lastName, email, password, } = req.body;
 
   if (isRegisterAuthenticated({ email })) {
@@ -78,9 +80,8 @@ server.post("/api/auth/register", (req, res) => {
   res.status(200).json({ access_token });
 });
 
-
 // LOGIN ///-------------------------
-server.post("/api/auth/login", (req, res) => {
+app.post("/api/auth/login", (req, res) => {
   const { email, password } = req.body;
 
   if (!isLoginAuthenticated({ email, password })) {
@@ -104,21 +105,20 @@ server.post("/api/auth/login", (req, res) => {
   }, 2000);
 });
 
-server.get("/api/login", (req, res) => {
+app.get("/api/login", (req, res) => {
 
   setTimeout(() => {
     res.status(200).json(postsdb.posts);
   }, 500);
 });
 
-
-server.get("/api/allusers", (req, res) => {
+app.get("/api/allusers", (req, res) => {
   setTimeout(() => {
     res.status(200).json(userdb.users);
   }, 500);
 });
 
-server.post('/api/posts', (req, res) => {
+app.post('/api/posts', (req, res) => {
   const { createdDate, imgUrl, content, createdBy, createdById } = req.body
   let postsData = {}
   fs.readFile("./posts.json", (err, data) => {
@@ -144,11 +144,98 @@ server.post('/api/posts', (req, res) => {
     });
     res.status(200).json(postsData);
   })
-
-
-  console.log(req.body);
 })
 
-server.listen(5000, () => {
+app.post('/api/comment', (req, res) => {
+  let postsData = {}
+  const {
+    commentsById,
+    commentsByName,
+    content,
+    id,
+    postId
+  } = req.body;
+
+
+  fs.readFile("./posts.json", (err, data) => {
+    postsData = JSON.parse(data.toString());
+
+    postsData.posts.forEach(post => {
+      if (post.id === postId) {
+        post.comments.push({
+          commentsById,
+          commentsByName,
+          content,
+          id,
+          postId
+        })
+      }
+    });
+    fs.writeFile("./posts.json", JSON.stringify(postsData), (err, result) => {
+      if (err) {
+        const status = 401;
+        const message = err;
+        res.status(200).json({ status, message });
+        return;
+      }
+    });
+    res.status(200).json(postsData);
+  })
+
+})
+
+app.post('/api/postLike', (req, res) => {
+  let postsData = {}
+  let count = 0;
+  let arrayLikes = [];
+
+  let d = {}
+  const {
+    userFullName,
+    userId,
+    postId
+  } = req.body;
+
+  fs.readFile("./posts.json", (err, data) => {
+    postsData = JSON.parse(data.toString());
+
+    postsData.posts.forEach(post => {
+      if (post.id === postId) {
+        if (post.likes.length === 0) {
+          post.likes.push({
+            userFullName,
+            userId,
+          })
+        } else {
+          for (let i = 0; i < post.likes.length; i++) {
+            if (post.likes[i].userId === userId) {
+              post.likes.splice(i, 1);
+              break;
+            } else if (i === post.likes.length - 1) {
+              post.likes.push({
+                userFullName,
+                userId,
+              })
+              break;
+            }
+          }
+        }
+      }
+    });
+
+    fs.writeFile("./posts.json", JSON.stringify(postsData), (err, result) => {
+      if (err) {
+        const status = 401;
+        const message = err;
+        res.status(200).json({ status, message });
+        return;
+      }
+    });
+    res.status(200).json(postsData);
+  })
+
+})
+
+app.listen(5000, () => {
   console.log("Running Social Network Server");
 });

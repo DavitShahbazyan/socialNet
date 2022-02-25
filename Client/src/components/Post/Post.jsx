@@ -20,6 +20,9 @@ import CommentIcon from '@mui/icons-material/Comment';
 import Comment from './../Comment/Comment';
 import AddComment from './../AddComment/AddComment';
 import List from '@mui/material/List';
+import { useDispatch, useSelector } from 'react-redux';
+import authService from '../../api/auth.service';
+import { getAllPostsSuccessAction } from '../../actions';
 
 
 const ExpandMore = styled((props) => {
@@ -34,14 +37,23 @@ const ExpandMore = styled((props) => {
 }));
 
 const Post = ({ data }) => {
+    const dispatch = useDispatch();
     const [expanded, setExpanded] = useState(false);
+    const { user } = useSelector(state => state.authentication);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     const handleLike = () => {
+        const userFullName = `${user.firstName} ${user.lastName}`;
+        const userId = user.id;
 
+        authService.postLike({ userFullName, userId, postId: data.id }).then(res => {
+            if (res.data.posts) {
+                dispatch(getAllPostsSuccessAction(res.data.posts));
+            }
+        })
     }
 
     return (
@@ -72,14 +84,16 @@ const Post = ({ data }) => {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton size="large" onClick={handleLike}>
-                    <Tooltip title={data.likes?.length ? data.likes : ''}>
+                    <Tooltip title={data.likes?.length ? data.likes.map(like => like.userFullName) : ''}>
                         <Badge badgeContent={data.likes?.length} color="error" >
                             <FavoriteIcon color='action' />
                         </Badge>
                     </Tooltip>
                 </IconButton>
                 <ExpandMore onClick={handleExpandClick} >
-                    <CommentIcon />
+                    <Badge badgeContent={data.comments?.length} color="primary">
+                        <CommentIcon />
+                    </Badge>
                 </ExpandMore>
 
             </CardActions>
@@ -92,7 +106,7 @@ const Post = ({ data }) => {
                             return <Comment key={i} comment={comment} />
                         })}
                     </List>
-                    <AddComment />
+                    <AddComment postId={data.id} />
                 </CardContent>
             </Collapse>
         </Paper>
