@@ -39,6 +39,7 @@ export default function UserBlock({ user }) {
             color="inherit"
             style={{
                 width: '100%',
+                padding: 3,
                 textAlign: 'left',
                 justifyContent: 'flex-start',
                 marginBottom: 10

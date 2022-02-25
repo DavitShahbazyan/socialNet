@@ -137,8 +137,8 @@ const Login = () => {
                                 sx={{ mt: 3, mb: 2 }}
                                 disabled={!isDisabled}
                             >
-                                {loading && (<CircularProgress size={15} />)}
-                                Sign In
+                                {loading && (<CircularProgress size={25} />)}
+                                {!loading && 'Sign In'}
                             </Button>
                             <Grid container>
                                 <Grid item xs>

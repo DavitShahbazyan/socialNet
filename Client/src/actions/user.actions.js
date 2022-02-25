@@ -6,3 +6,12 @@ export function loginRequestAction() { return { type: userConstants.LOGIN_REQUES
 export function logountAction() { return { type: userConstants.LOGOUT } }
 
 export function registerSuccessAction() { return { type: userConstants.REGISTER_SUCCESS } }
+
+// Users
+export function getAllUserRequestAction() { return { type: userConstants.GETALL_REQUEST } }
+export function getAllUserSuccessAction(users) { return { type: userConstants.GETALL_SUCCESS, users } }
+
+// Posts
+export function getAllPostsRequestAction() { return { type: userConstants.GET_ALL_POSTS_REQUEST } }
+export function getAllPostsSuccessAction(posts) { return { type: userConstants.GET_ALL_POSTS_SUCCESS, posts } }
+export function getAllPostsFailureAction(error) { return { type: userConstants.GET_ALL_POSTS_FAILURE, error } }
