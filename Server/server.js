@@ -5,7 +5,7 @@ import cors from 'cors';
 
 const app = express();
 
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ extended: true, limit: '50mb' }));
 app.use(cors());
 app.use(express.urlencoded({
   extended: true,
@@ -90,7 +90,7 @@ app.post("/api/auth/login", (req, res) => {
 
     setTimeout(() => {
       res.status(200).json({ status, message });
-    }, 5000);
+    }, 2000);
     return;
   }
 
@@ -105,8 +105,7 @@ app.post("/api/auth/login", (req, res) => {
   }, 2000);
 });
 
-app.get("/api/login", (req, res) => {
-
+app.get("/api/posts", (req, res) => {
   setTimeout(() => {
     res.status(200).json(postsdb.posts);
   }, 500);
@@ -186,10 +185,6 @@ app.post('/api/comment', (req, res) => {
 
 app.post('/api/postLike', (req, res) => {
   let postsData = {}
-  let count = 0;
-  let arrayLikes = [];
-
-  let d = {}
   const {
     userFullName,
     userId,
@@ -234,6 +229,45 @@ app.post('/api/postLike', (req, res) => {
     res.status(200).json(postsData);
   })
 
+})
+
+app.post('/api/uploadProfilePicture', (req, res) => {
+  let currentUser = {}
+  const {
+    avatar,
+    userId,
+  } = req.body;
+
+  fs.readFile("./users.json", (err, data) => {
+    if (err) {
+      const status = 401;
+      const message = err;
+      res.status(200).json({ status, message });
+      return;
+    }
+
+    data = JSON.parse(data.toString());
+
+
+
+    data.users.forEach(user => {
+      if (user.id === userId) {
+        user.avatar = avatar;
+        currentUser = user;
+      }
+    });
+
+    let writeData = fs.writeFile("./users.json", JSON.stringify(data), (err, result) => {
+      if (err) {
+        const status = 401;
+        const message = err;
+        res.status(200).json({ status, message });
+        return;
+      }
+    });
+
+    res.status(200).json({ currentUser, allUsers: data });
+  });
 })
 
 app.listen(5000, () => {

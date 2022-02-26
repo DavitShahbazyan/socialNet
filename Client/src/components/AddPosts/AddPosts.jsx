@@ -20,6 +20,7 @@ export default function AddPosts() {
     const [imgName, setImgName] = useState('');
     const [btnDisabled, setBtnDisabled] = useState(true);
     const { user } = useSelector(state => state.authentication);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -61,12 +62,11 @@ export default function AddPosts() {
             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '80%', margin: '20px 0 50px' }}
         >
             <IconButton sx={{ p: '10px' }} aria-label="menu">
-                <Avatar />
+                <Avatar src={user.avatar} />
             </IconButton>
             <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder={`What's new ${user.firstName}`}
-                inputProps={{ 'aria-label': 'search google maps' }}
                 value={content}
                 onChange={(e) => { setContent(e.target.value) }}
             />

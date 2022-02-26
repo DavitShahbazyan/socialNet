@@ -23,7 +23,7 @@ const logout = () => {
 };
 
 const getPosts = () => {
-    return axios.get("http://localhost:5000/api/login");
+    return axios.get("http://localhost:5000/api/posts");
 }
 
 const getUsers = () => {
@@ -46,6 +46,10 @@ const postLike = (data) => {
     return axios.post('http://localhost:5000/api/postLike', data);
 }
 
+const uploadProfilePicture = (data) => {
+    return axios.post('http://localhost:5000/api/uploadProfilePicture', data);
+}
+
 const authService = {
     register,
     login,
@@ -55,7 +59,8 @@ const authService = {
     createPosts,
     getCountres,
     addComment,
-    postLike
+    postLike,
+    uploadProfilePicture
 }
 
 export default authService;

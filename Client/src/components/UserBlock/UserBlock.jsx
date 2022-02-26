@@ -1,6 +1,7 @@
 import React from 'react';
-import { Avatar, ButtonBase, Badge } from '@mui/material';
+import { Avatar, Badge, ListItem, ListItemText } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import ListItemIcon from '@mui/material/ListItemIcon';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -31,28 +32,20 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-
 export default function UserBlock({ user }) {
     return (
-        <ButtonBase
-            size="large"
-            color="inherit"
-            style={{
-                width: '100%',
-                padding: 3,
-                textAlign: 'left',
-                justifyContent: 'flex-start',
-                marginBottom: 10
-            }}>
-            <StyledBadge
-                overlap="circular"
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                style={{ marginRight: 10 }}
-                variant="dot"
-            >
-                <Avatar sx={{ width: 30, height: 30 }} alt={user.firstName + " " + user.lastName} src={user.avatar} />
-            </StyledBadge>
-            {user.firstName + " " + user.lastName}
-        </ButtonBase>
+        <ListItem button key={user.id}>
+            <ListItemIcon>
+                <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    style={{ marginRight: 10 }}
+                    variant="dot"
+                >
+                    <Avatar alt={user.firstName + " " + user.lastName} src={user.avatar} />
+                </StyledBadge>
+            </ListItemIcon>
+            <ListItemText secondary={user.firstName + " " + user.lastName} style={{ fontSize: 14 }} />
+        </ListItem>
     )
 }

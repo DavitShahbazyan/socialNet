@@ -7,15 +7,28 @@ import {
     Tooltip,
     Typography
 } from '@mui/material'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux';
 
 export default function Comment({ comment }) {
+    const { users } = useSelector(state => state.users);
+    const [avatar, setAvatar] = useState('');
+
+    useEffect(() => {
+        users.forEach(user => {
+            if (user.id === comment.commentsById) {
+                setAvatar(user.avatar)
+            }
+        });
+    }, [users])
+
+
     return (
         <>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                     <Tooltip title={comment.commentsByName}>
-                        <Avatar alt={comment.commentsByName} src="/static/images/avatar/2.jpg" />
+                        <Avatar alt={comment.commentsByName} src={avatar} />
                     </Tooltip>
                 </ListItemAvatar>
                 <ListItemText

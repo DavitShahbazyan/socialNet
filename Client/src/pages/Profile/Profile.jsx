@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Avatar,
     Box,
@@ -14,9 +14,9 @@ import {
     TextField,
     Input
 } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import authService from '../../api/auth.service';
+import { successAction, getAllUserSuccessAction } from '../../actions';
 
 const getBase64 = (file) => new Promise(function (resolve, reject) {
     let reader = new FileReader();
@@ -26,7 +26,8 @@ const getBase64 = (file) => new Promise(function (resolve, reject) {
 })
 
 const Account = () => {
-    const { id } = useParams();
+    const dispatch = useDispatch();
+    const [img, setImg] = useState('');
     const { user } = useSelector(state => state.authentication);
     const [values, setValues] = useState(user);
 
@@ -37,13 +38,22 @@ const Account = () => {
         });
     };
 
-    useEffect(async () => {
-        const countres = await authService.getCountres();
-        console.log(countres);
-    }, [])
+
+    const uploadImageFn = (e) => {
+        let file = e.target.files[0];
+        getBase64(file).then(res => {
+            setImg(res);
+        })
+    }
 
     const onSubmit = () => {
-        console.log(values);
+        authService.uploadProfilePicture({
+            avatar: img,
+            userId: user.id
+        }).then(res => {
+            dispatch(successAction(res.data.currentUser));
+            dispatch(getAllUserSuccessAction(res.data.allUsers.users));
+        })
     }
     return (
         <>
@@ -68,7 +78,7 @@ const Account = () => {
                                         }}
                                     >
                                         <Avatar
-                                            src={values?.avatar}
+                                            src={!!img ? img : user.avatar}
                                             sx={{ height: 64, mb: 2, width: 64 }}
                                         />
                                         <Typography
@@ -89,7 +99,7 @@ const Account = () => {
                                 <Divider />
                                 <CardActions>
                                     <label htmlFor="contained-button-file">
-                                        <Input accept="image/*" id="contained-button-file" multiple type="file" hidden />
+                                        <Input accept="image/*" id="contained-button-file" multiple type="file" hidden onChange={uploadImageFn} />
                                         <Button variant="contained" component="span">
                                             Upload
                                         </Button>
