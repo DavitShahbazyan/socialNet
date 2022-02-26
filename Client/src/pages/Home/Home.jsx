@@ -1,7 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './Home.css'
-import { LinearProgress, CircularProgress, Box, Avatar, Typography } from '@mui/material';
+import {
+    LinearProgress,
+    CircularProgress,
+    Box,
+    Avatar,
+    Typography,
+    ListItemIcon,
+    ListItemText,
+    Collapse,
+    List,
+    ListItemButton
+} from '@mui/material';
 import { Layout } from 'antd';
 import Post from './../../components/Post/Post';
 import authService from './../../api/auth.service';
@@ -13,12 +24,6 @@ import {
     getAllUserSuccessAction,
     getAllPostsFailureAction
 } from '../../actions';
-
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -26,10 +31,12 @@ import StarBorder from '@mui/icons-material/StarBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual';
 import AddPosts from '../../components/AddPosts/AddPosts';
+import { useTranslation } from 'react-i18next';
 
 const { Content, Sider } = Layout;
 
 const Home = () => {
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
     const postsState = useSelector(state => state.posts);
     const usersState = useSelector(state => state.users);
@@ -41,6 +48,7 @@ const Home = () => {
     };
 
     useEffect(() => {
+        i18n.changeLanguage('en')
         const fetchData = async () => {
             if (!postsState.posts) {
                 dispatch(getAllPostsRequestAction());
@@ -160,6 +168,7 @@ const Home = () => {
 
                         }}
                     >
+
                         <AddPosts />
 
                         {postsState.posts?.map(post => (
