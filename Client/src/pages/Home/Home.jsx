@@ -123,13 +123,13 @@ const Home = () => {
                                     <ListItemIcon>
                                         <PersonIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Profile" />
+                                    <ListItemText primary={t("profile")} />
                                 </ListItemButton>
                                 <ListItemButton>
                                     <ListItemIcon>
                                         <PhotoSizeSelectActualIcon />
                                     </ListItemIcon>
-                                    <ListItemText primary="Photo" />
+                                    <ListItemText primary={t("photo")} />
                                 </ListItemButton>
                                 <ListItemButton onClick={handleClick}>
                                     <ListItemIcon>

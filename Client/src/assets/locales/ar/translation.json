@@ -1,4 +1,14 @@
 {
-    "select_language": "yntrel lezun",
-    "search": "Voronel"
+    "select_language": "Ընտրել լեզուն",
+    "search": "Որոնել",
+    "what's_new": "Ինչ կա մտքիդ",
+    "profile": "Անձնական էջ",
+    "photo": "Նկար",
+    "open_Settings": "Կարգավորումներ",
+    "add_comments": "Ավելացնել մեկնաբանություններ",
+    "email_address": "Էլեկտրոնային հասցե", 
+    "password": "Գաղտնաբառ",
+    "remember_me": "Հիշել",
+    "first_name": "Անուն",
+    "last_name":  "Ազգանուն"
 }

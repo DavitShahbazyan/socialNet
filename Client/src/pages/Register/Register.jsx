@@ -7,10 +7,12 @@ import authService from './../../api/auth.service';
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequestAction, registerSuccessAction } from '../../actions';
+import { useTranslation } from 'react-i18next';
 
 const theme = createTheme();
 
 function Register() {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
@@ -84,7 +86,7 @@ function Register() {
                                     required
                                     fullWidth
                                     id="firstName"
-                                    label="First Name"
+                                    label={t("first_name")}
                                     autoFocus
                                     onChange={e => setFirstName(e.target.value)}
                                 />
@@ -94,7 +96,7 @@ function Register() {
                                     required
                                     fullWidth
                                     id="lastName"
-                                    label="Last Name"
+                                    label={t("last_name")}
                                     name="lastName"
                                     autoComplete="family-name"
                                     onChange={e => setLastName(e.target.value)}
@@ -105,7 +107,7 @@ function Register() {
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Email Address"
+                                    label={t("email_address")}
                                     name="email"
                                     autoComplete="email"
                                     onChange={e => setEmail(e.target.value)}
@@ -116,7 +118,7 @@ function Register() {
                                     required
                                     fullWidth
                                     name="password"
-                                    label="Password"
+                                    label={t("password")}
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"

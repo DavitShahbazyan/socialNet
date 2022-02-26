@@ -4,6 +4,7 @@ import { Input, Slide, Button, IconButton, InputAdornment, ClickAwayListener } f
 import Iconify from '../Iconify/Iconify';
 import Search from '@mui/icons-material/Search';
 import SearchIcon from '@mui/icons-material/Search';
+import { useTranslation } from 'react-i18next';
 
 
 const SearchbarStyle = styled('div')(({ theme }) => ({
@@ -37,6 +38,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 
 export default function Searchbar() {
+    const { t } = useTranslation();
     const [isOpen, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -66,7 +68,7 @@ export default function Searchbar() {
                             autoFocus
                             fullWidth
                             disableUnderline
-                            placeholder="Search…"
+                            placeholder={t("search")}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <Iconify
@@ -78,7 +80,7 @@ export default function Searchbar() {
                             sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
                         />
                         <Button variant="contained" onClick={handleClose}>
-                            Search
+                        {t("search")}
                         </Button>
                     </SearchbarStyle>
                 </Slide>

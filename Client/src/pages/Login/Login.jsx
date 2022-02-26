@@ -18,10 +18,12 @@ import { useSnackbar } from 'notistack';
 import { loginRequestAction, successAction, failureAction } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const theme = createTheme();
 
 const Login = () => {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { loading } = useSelector(state => state.authentication);
@@ -107,7 +109,7 @@ const Login = () => {
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email Address"
+                                label={t("email_address")}
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
@@ -119,7 +121,7 @@ const Login = () => {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label={t("password")}
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
@@ -128,7 +130,7 @@ const Login = () => {
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
+                                label={t("remember_me")}
                             />
                             <Button
                                 type="submit"
