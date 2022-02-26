@@ -11,9 +11,9 @@ import authService from './../../api/auth.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { logountAction } from '../../actions';
 import { ButtonBase } from '@mui/material';
-// import LanguageSelect from '../LanguageSelect/LanguageSelect';
+import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import { useTranslation } from 'react-i18next';
-// import Searchbar from '../Searchbar/Searchbar';
+import Searchbar from '../Searchbar/Searchbar';
 
 const Header = () => {
     const { t } = useTranslation();
@@ -56,12 +56,12 @@ const Header = () => {
                     </Link>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        {/* <div style={{ marginTop: 5 }}>
+                        <div style={{ marginTop: 5 }}>
                             <Searchbar />
                         </div>
                         <div style={{ marginTop: 2 }}>
                             <LanguageSelect />
-                        </div> */}
+                        </div>
                         <IconButton size="large" color="inherit" onClick={() => navigate('/chat')}>
                             <Badge color="error">
                                 <MailIcon />
