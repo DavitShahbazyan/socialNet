@@ -97,7 +97,7 @@ const Home = () => {
                             }}>
                                 <Avatar
                                     alt={`${user.firstName} ${user.lastName}`}
-                                    src={user?.avatar || ''}
+                                    src={user.avatar}
                                     sx={{ width: 80, height: 80, marginBottom: 2 }}
                                 />
 
@@ -170,7 +170,6 @@ const Home = () => {
 
                 <Sider style={{
                     background: '#fff',
-                    padding: 10,
                     height: 'calc(100vh - 64px)',
                     overflow: 'auto'
                 }}>

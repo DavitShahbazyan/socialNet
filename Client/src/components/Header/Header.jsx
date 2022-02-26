@@ -105,18 +105,9 @@ const Header = () => {
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" color="inherit">
-                            <Badge badgeContent={1} color="error">
+                        <IconButton size="large" color="inherit" onClick={() => navigate('/chat')}>
+                            <Badge color="error">
                                 <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={1} color="error">
-                                <FavoriteIcon />
                             </Badge>
                         </IconButton>
                         <Tooltip title="Open settings">

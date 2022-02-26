@@ -12,6 +12,7 @@ const Login = lazy(() => import('./pages/Login/Login'))
 const Register = lazy(() => import('./pages/Register/Register'));
 const Home = lazy(() => import('./pages/Home/Home'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
+const Chat = lazy(() => import('./pages/Chat/Chat'));
 
 function App() {
   const { loggedIn, loading } = useSelector(state => state.authentication);
@@ -59,6 +60,14 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/chat"
+            element={
+              <PrivateRoute>
+                <Chat />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Suspense>
     </SnackbarProvider>
@@ -66,5 +75,3 @@ function App() {
 }
 
 export default App;
-
-

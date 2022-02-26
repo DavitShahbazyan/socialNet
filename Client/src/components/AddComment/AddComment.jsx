@@ -37,7 +37,7 @@ export default function AddComment({ postId }) {
         >
             <Avatar
                 alt={`${user.firstName} ${user.lastName}`}
-                src={`${user.avatart}`}
+                src={user.avatar}
             />
 
             <InputBase
