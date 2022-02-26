@@ -9,8 +9,10 @@ import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
 import authService from '../../api/auth.service';
 import { getAllPostsSuccessAction } from '../../actions';
+import { useTranslation } from 'react-i18next';
 
 export default function AddComment({ postId }) {
+    const { t } = useTranslation();
     const [content, setContent] = useState('');
     const { user } = useSelector(state => state.authentication);
     const dispatch = useDispatch();
@@ -42,7 +44,7 @@ export default function AddComment({ postId }) {
 
             <InputBase
                 sx={{ ml: 1, flex: 1 }}
-                placeholder="Add Comments"
+                placeholder={t("add_comments")}
                 inputProps={{ 'aria-label': 'search google maps' }}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}

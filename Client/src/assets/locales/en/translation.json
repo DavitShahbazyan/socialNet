@@ -1,4 +1,14 @@
 {
     "select_language": "select language",
-    "search": "Search"
+    "search": "Search",
+    "what's_new": "What's new",
+    "profile": "Profile",
+    "photo": "Photo",
+    "open_Settings": "Open Settings",
+    "add_comments": "Add Comments", 
+    "email_address": "Email Address", 
+    "password": "Password",
+    "remember_me": "Remember me",
+    "first_name": "First Name",
+    "last_name":  "Last Name"
 }

@@ -67,7 +67,7 @@ const Header = () => {
                                 <MailIcon />
                             </Badge>
                         </IconButton>
-                        <Tooltip title="Open settings">
+                        <Tooltip title={t("open_Settings")}>
                             <IconButton
                                 size="large"
                                 onClick={handleOpenUserMenu}

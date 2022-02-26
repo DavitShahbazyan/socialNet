@@ -66,7 +66,7 @@ export default function AddPosts() {
             </IconButton>
             <InputBase
                 sx={{ ml: 1, flex: 1 }}
-                placeholder={`What's new ${user.firstName}`}
+                placeholder={`"what's_new" ${user.firstName}`}
                 value={content}
                 onChange={(e) => { setContent(e.target.value) }}
             />
