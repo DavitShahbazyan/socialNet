@@ -6,9 +6,10 @@
     "photo": "Фото",
     "open_Settings": "Настройки",
     "add_comments": "Добавить комментарии",
-    "email_address": "Адрес электронной почты", 
+    "email_address": "Адрес электронной почты",
     "password": "Пароль",
     "remember_me": "Запомни меня",
     "first_name": "Имя",
-    "last_name":  "Фамилия"
+    "last_name": "Фамилия",
+    "logout": "Выйти"
 }

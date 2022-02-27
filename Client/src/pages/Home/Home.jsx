@@ -9,7 +9,6 @@ import {
     Typography,
     ListItemIcon,
     ListItemText,
-    Collapse,
     List,
     ListItemButton
 } from '@mui/material';
@@ -24,10 +23,6 @@ import {
     getAllUserSuccessAction,
     getAllPostsFailureAction
 } from '../../actions';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual';
 import AddPosts from '../../components/AddPosts/AddPosts';
@@ -41,11 +36,7 @@ const Home = () => {
     const postsState = useSelector(state => state.posts);
     const usersState = useSelector(state => state.users);
     const { user, loading } = useSelector(state => state.authentication);
-    const [open, setOpen] = React.useState(true);
 
-    const handleClick = () => {
-        setOpen(!open);
-    };
 
     useEffect(() => {
         i18n.changeLanguage('en')
@@ -131,23 +122,6 @@ const Home = () => {
                                     </ListItemIcon>
                                     <ListItemText primary={t("photo")} />
                                 </ListItemButton>
-                                <ListItemButton onClick={handleClick}>
-                                    <ListItemIcon>
-                                        <InboxIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Inbox" />
-                                    {open ? <ExpandLess /> : <ExpandMore />}
-                                </ListItemButton>
-                                <Collapse in={open} timeout="auto" unmountOnExit>
-                                    <List component="div" disablePadding>
-                                        <ListItemButton sx={{ pl: 4 }}>
-                                            <ListItemIcon>
-                                                <StarBorder />
-                                            </ListItemIcon>
-                                            <ListItemText primary="Starred" />
-                                        </ListItemButton>
-                                    </List>
-                                </Collapse>
                             </List>
 
                         </aside>
@@ -192,9 +166,12 @@ const Home = () => {
                         }}>
                             <CircularProgress />
                         </Box>
-                    ) : (usersState.users?.map((user) => (
-                        <UserBlock key={user.id} user={user} />
-                    )))}
+                    ) : (usersState.users?.map((u) => {
+                        if (u.id === user.id) {
+                            return
+                        }
+                        return <UserBlock key={u.id} user={u} />
+                    }))}
                 </Sider>
             </div>
         </div >
