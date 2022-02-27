@@ -1,6 +1,6 @@
 import './App.css';
-import React, { lazy, Suspense } from 'react';
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect, lazy, Suspense } from 'react';
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Header from './components/Header/Header';
 import { SnackbarProvider } from 'notistack';
@@ -16,6 +16,15 @@ const Chat = lazy(() => import('./pages/Chat/Chat'));
 
 function App() {
   const { loggedIn, loading } = useSelector(state => state.authentication);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/home');
+    } else {
+      navigate('/login');
+    }
+  }, [loggedIn])
 
   return (
     <SnackbarProvider

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import authService from '../../api/auth.service';
 import { getAllPostsSuccessAction } from '../../actions';
+import { useTranslation } from 'react-i18next';
 
 const getBase64 = (file) => new Promise(function (resolve, reject) {
     let reader = new FileReader();
@@ -15,6 +16,7 @@ const getBase64 = (file) => new Promise(function (resolve, reject) {
 })
 
 export default function AddPosts() {
+    const { t } = useTranslation();
     const [content, setContent] = useState('');
     const [img, setImg] = useState('');
     const [imgName, setImgName] = useState('');
@@ -66,7 +68,7 @@ export default function AddPosts() {
             </IconButton>
             <InputBase
                 sx={{ ml: 1, flex: 1 }}
-                placeholder={`"what's_new" ${user.firstName}`}
+                placeholder={`${t("what's_new")} ${user.firstName}`}
                 value={content}
                 onChange={(e) => { setContent(e.target.value) }}
             />

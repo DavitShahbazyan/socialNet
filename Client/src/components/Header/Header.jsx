@@ -96,11 +96,11 @@ const Header = () => {
                                 handleCloseUserMenu();
                                 navigate(`/profile/${user.id}`);
                             }}>
-                                <Typography textAlign="center">Profile</Typography>
+                                <Typography textAlign="center">{t("profile")}</Typography>
                             </MenuItem>
 
                             <MenuItem onClick={logout}>
-                                <Typography textAlign="center">Logout</Typography>
+                                <Typography textAlign="center">{t("logout")}</Typography>
                             </MenuItem>
                         </Menu>
                     </Box>
