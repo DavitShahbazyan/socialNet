@@ -10,5 +10,6 @@
     "password": "Գաղտնաբառ",
     "remember_me": "Հիշել",
     "first_name": "Անուն",
-    "last_name":  "Ազգանուն"
+    "last_name":  "Ազգանուն",
+    "logout": "Դուրս գալ"
 }

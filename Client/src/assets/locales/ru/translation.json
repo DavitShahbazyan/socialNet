@@ -10,5 +10,6 @@
     "password": "Пароль",
     "remember_me": "Запомни меня",
     "first_name": "Имя",
-    "last_name":  "Фамилия"
+    "last_name":  "Фамилия",
+    "logout": "Выйти"
 }
